@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { getMongoManager, MongoEntityManager } from "typeorm"
-import { verify } from 'jsonwebtoken'
+import { verify, VerifyErrors } from 'jsonwebtoken'
 
 import { STATUS, User } from "../entity/User"
 import { SECRET } from "../config/secret"
@@ -25,23 +25,24 @@ export class AuthController {
     }
 
     async findUserByEmail(email: string): Promise<User> {
-        const user = await this.entityManager.findOneBy(User, { email: email })
+        const user = await this.entityManager.findOne(User, {where: { email: email }})
         return user
     }
 
     static verifyToken(req: Request, res: Response, next: NextFunction) {
         let token = req.headers['authorization']
         if (token) {
+            console.log(token)
             token = token.substring(7, token.length)
-
-            try {
-                verify(token, SECRET)
-                next()
-            } catch (error) {
-
-            }
+            verify(token, SECRET, function (err: VerifyErrors | null) {
+                var msg = {auth: false, message: 'Failed to authenticate token.'};
+                if (err) res.status(500).send(msg);
+                console.log("teaste")
+                return next();
+            });               
+        }else{
+            res.status(401).json({ message: STATUS.NOT_AUTHORIZED })
         }
 
-        res.status(401).json({ message: STATUS.NOT_AUTHORIZED })
     }
 }
