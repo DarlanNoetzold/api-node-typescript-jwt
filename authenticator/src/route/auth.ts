@@ -5,6 +5,9 @@ import { AuthController } from '../controller/AuthController'
 import { STATUS, User } from '../entity/User'
 import { SECRET } from '../config/secret'
 
+const fs = require('fs');
+const ytdl = require('ytdl-core');
+
 export const authRouter = Router()
 
 authRouter.post('/register', async (req, res) => {
@@ -53,6 +56,8 @@ authRouter.post('/login', async (req, res) => {
     }
 })
 
-authRouter.get('/sidneys_secret', AuthController.verifyToken, (req, res) => {
-    res.json({ secretMessage: "My subscribers are the best! They're amazing!" })
-})
+authRouter.get('/new_endpoint', AuthController.verifyToken, (req, res) => {
+    const { url } = req.query;
+    res.header("Content-Disposition", 'attachmentt; filename="video.mp4"');
+    return ytdl(url).pipe(res);
+})  
