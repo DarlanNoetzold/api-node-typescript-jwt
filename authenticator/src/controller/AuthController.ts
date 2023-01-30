@@ -32,12 +32,10 @@ export class AuthController {
     static verifyToken(req: Request, res: Response, next: NextFunction) {
         let token = req.headers['authorization']
         if (token) {
-            console.log(token)
             token = token.substring(7, token.length)
             verify(token, SECRET, function (err: VerifyErrors | null) {
                 var msg = {auth: false, message: 'Failed to authenticate token.'};
                 if (err) res.status(500).send(msg);
-                console.log("teaste")
                 return next();
             });               
         }else{
