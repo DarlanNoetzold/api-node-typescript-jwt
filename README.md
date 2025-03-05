@@ -1,14 +1,13 @@
 # api-node-typescript-jwt
- Api construida em Typescript com Nodejs, com o objetivo de implementar CRUD e sistema de segurança via Token JWT
+Api built in Typescript with Nodejs, with the goal of implementing CRUD and security system via JWT Token
 
-## Projeto:
-* Uma API com autenticação via Token JWT;
-* Existem endpoints de cadastro e login de usuários e também um endpoint de download de vídeos de youtube;
-* Os dados são salvos em um banco MongoDB.
+## Project:
+* An API with authentication via JWT Token;
+* There are endpoints for user registration and login and also an endpoint for downloading videos from YouTube;
+* The data is saved in a MongoDB database.
 
-
-## Desenvolvimento:
-* Este projeto tem como objetivo se tornar um template para uso do Typescript com o Node.js, usando autenticação via Token JWT.
+## Development:
+* This project aims to become a template for using Typescript with Node.js, using authentication via JWT Token.
 
 ---
 
